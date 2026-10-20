@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Финансовая безопасность и цифровая гигиена | Практический образовательный модуль</title>
+  <meta name="description" content="Учебный модуль и симулятор цифровой безопасности для подростков и молодежи: дропперство, ст. 187 УК РФ, фишинг, социальная инженерия.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0d14;
+      --bg-card: #121824;
+      --bg-card-hover: #182234;
+      --border-color: #1e293b;
+      --accent-cyan: #00f0ff;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --accent-amber: #f59e0b;
+      --accent-purple: #8b5cf6;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-code: 'Fira Code', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 40%);
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header & Navigation */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(10, 13, 20, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 72px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+    .logo-badge {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      color: #000;
+      font-size: 0.75rem;
+      font-weight: 900;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: var(--font-code);
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover {
+      color: var(--accent-cyan);
+    }
+    .btn-nav {
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid var(--accent-cyan);
+      color: var(--accent-cyan) !important;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600 !important;
+      transition: all 0.2s ease;
+    }
+    .btn-nav:hover {
+      background: var(--accent-cyan);
+      color: #000 !important;
+      box-shadow: 0 0 16px rgba(0, 240, 255, 0.4);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 90px 0 60px;
+      text-align: center;
+      position: relative;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .hero-tag span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-red);
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 0.4; }
+      50% { opacity: 1; }
+      100% { opacity: 0.4; }
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 24px;
+      letter-spacing: -1px;
+    }
+    .hero h1 span.gradient {
+      background: linear-gradient(135deg, var(--accent-cyan), #38bdf8, var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p.lead {
+      max-width: 780px;
+      margin: 0 auto 36px;
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+    .channel-badges {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .channel-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.25s ease;
+    }
+    .btn-tg {
+      background: #229ed9;
+      color: #fff;
+    }
+    .btn-tg:hover {
+      box-shadow: 0 0 20px rgba(34, 158, 217, 0.4);
+      transform: translateY(-2px);
+    }
+    .btn-max {
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
+      color: #fff;
+    }
+    .btn-max:hover {
+      box-shadow: 0 0 20px rgba(255, 65, 108, 0.4);
+      transform: translateY(-2px);
+    }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+      text-align: left;
+    }
+    .meta-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .meta-card .label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-family: var(--font-code);
+      margin-bottom: 6px;
+    }
+    .meta-card .val {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* Section Styling */
+    section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border-color);
+    }
+    .section-header {
+      margin-bottom: 48px;
+    }
+    .section-eyebrow {
+      color: var(--accent-cyan);
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 14px;
+    }
+    .section-desc {
+      color: var(--text-muted);
+      max-width: 680px;
+      font-size: 1.05rem;
+    }
+
+    /* Problem Core & Legal Risks */
+    .risk-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .risk-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    .risk-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--accent-red);
+    }
+    .risk-card.warn::before { background: var(--accent-amber); }
+    .risk-card.info::before { background: var(--accent-cyan); }
+    .risk-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .risk-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+    .risk-badge {
+      display: inline-block;
+      font-family: var(--font-code);
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Target Audience Profiles */
+    .profiles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .profile-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 28px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .profile-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0, 240, 255, 0.3);
+    }
+    .profile-role {
+      font-size: 0.85rem;
+      font-family: var(--font-code);
+      color: var(--accent-purple);
+      margin-bottom: 8px;
+    }
+    .profile-card h4 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .profile-card .illusion {
+      background: rgba(239, 68, 68, 0.08);
+      border-left: 2px solid var(--accent-red);
+      padding: 10px 14px;
+      margin-bottom: 14px;
+      font-size: 0.88rem;
+      color: #fca5a5;
+    }
+    .profile-card .focus {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Curriculum Table / Timeline */
+    .curriculum-grid {
+      display: grid;
+      gap: 20px;
+    }
+    .lesson-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 24px;
+      align-items: center;
+    }
+    @media (max-width: 768px) {
+      .lesson-item {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+    }
+    .lesson-num {
+      width: 54px;
+      height: 54px;
+      border-radius: 12px;
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid var(--accent-cyan);
+      color: var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-code);
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+    .lesson-info h4 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .lesson-info p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    .lesson-tag {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      font-family: var(--font-code);
+      color: var(--accent-green);
+    }
+
+    /* Handout & Infographic Section */
+    .handout-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+      align-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 36px;
+    }
+    @media (max-width: 900px) {
+      .handout-wrapper {
+        grid-template-columns: 1fr;
+      }
+    }
+    .handout-preview {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      background: #000;
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .handout-preview img {
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .handout-preview:hover img {
+      transform: scale(1.02);
+    }
+    .handout-content h3 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    .handout-rules {
+      list-style: none;
+      margin: 20px 0;
+    }
+    .handout-rules li {
+      margin-bottom: 14px;
+      padding-left: 28px;
+      position: relative;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+    .handout-rules li strong {
+      color: var(--text-main);
+    }
+    .handout-rules li::before {
+      content: '✖';
+      position: absolute;
+      left: 0;
+      color: var(--accent-red);
+      font-weight: bold;
+    }
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--accent-cyan), #0284c7);
+      color: #000;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn-download:hover {
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* Simulator Section */
+    .simulator-container {
+      background: #0d121d;
+      border: 1px solid #1e293b;
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+    .sim-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .sim-title-group h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .sim-title-group p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .hp-box {
+      min-width: 240px;
+    }
+    .hp-label {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+    }
+    .hp-bar-bg {
+      width: 100%;
+      height: 12px;
+      background: #1e293b;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .hp-bar-fill {
+      width: 100%;
+      height: 100%;
+      background: var(--accent-green);
+      transition: width 0.4s ease, background-color 0.4s ease;
+    }
+
+    .sim-stage {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .sim-stage.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .sim-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .sim-scenario-meta {
+      font-family: var(--font-code);
+      color: var(--accent-cyan);
+      font-size: 0.8rem;
+      margin-bottom: 8px;
+    }
+    .sim-dialog-box {
+      background: #090d16;
+      border: 1px dashed #334155;
+      border-radius: 10px;
+      padding: 16px;
+      margin: 16px 0;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .sim-options {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .sim-btn {
+      background: #182234;
+      border: 1px solid #334155;
+      color: var(--text-main);
+      padding: 14px 20px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: var(--font-main);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sim-btn:hover {
+      background: #1e2c44;
+      border-color: var(--accent-cyan);
+      transform: translateX(4px);
+    }
+    .sim-btn-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: rgba(0, 240, 255, 0.1);
+      color: var(--accent-cyan);
+      font-family: var(--font-code);
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .feedback-box {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      display: none;
+    }
+    .feedback-box.error {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid var(--accent-red);
+      color: #fca5a5;
+    }
+    .feedback-box.success {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid var(--accent-green);
+      color: #86efac;
+    }
+    .sim-reset-btn {
+      background: var(--accent-cyan);
+      color: #000;
+      font-weight: 700;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 16px;
+    }
+
+    /* Chatbot Section */
+    .chatbot-section {
+      background: linear-gradient(180deg, var(--bg-dark), #090e18);
+    }
+    .bot-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 36px;
+      align-items: center;
+    }
+    @media (max-width: 900px) {
+      .bot-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    .bot-info h3 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    .bot-features {
+      list-style: none;
+      margin: 24px 0;
+    }
+    .bot-features li {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+    .bot-features li span {
+      color: var(--accent-cyan);
+      font-weight: bold;
+    }
+    .bot-frame-wrap {
+      height: 580px;
+      width: 100%;
+      background: #090d16;
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      position: relative;
+    }
+    .bot-frame-wrap iframe {
+      width: 100% !important;
+      height: 100% !important;
+      border: none;
+    }
+
+    /* Floating Bot Launcher */
+    .floating-bot-toggle {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      color: #000;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 22px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 8px 30px rgba(0, 240, 255, 0.4);
+      transition: transform 0.2s ease;
+    }
+    .floating-bot-toggle:hover {
+      transform: scale(1.05);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 50px 0 30px;
+      background: #06080e;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-left: 20px;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover {
+      color: var(--accent-cyan);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <div class="container nav-wrapper">
+      <a href="#" class="logo">
+        <span class="logo-badge">CYBER-SEC</span>
+        <span>ФинБезопасность</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">О курсе</a></li>
+        <li><a href="#curriculum">Учебный план</a></li>
+        <li><a href="#handout">Памятка</a></li>
+        <li><a href="#simulator">Симулятор</a></li>
+        <li><a href="#bot" class="btn-nav">Чат-бот КиберЩит</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="about">
+    <div class="container">
+      <div class="hero-tag">
+        <span></span> Предотвращение соучастия в преступлениях (ст. 187 УК РФ / 115-ФЗ)
+      </div>
+      <h1>Практико-ориентированный интенсив<br><span class="gradient">«Финансовая безопасность и цифровая гигиена»</span></h1>
+      <p class="lead">
+        Как подростку 14–18 лет не стать дроппером за 3000 рублей, защитить банковскую карту, распознать фишинг на маркетплейсах и не лишиться доступа к банкам на всю жизнь.
+      </p>
+
+      <div class="channel-badges">
+        <a href="https://t.me/sharapov_rf" target="_blank" rel="noopener noreferrer" class="channel-btn btn-tg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .37z"/></svg>
+          Telegram-канал автора
+        </a>
+        <a href="https://max.ru/channel_sharapov" target="_blank" rel="noopener noreferrer" class="channel-btn btn-max">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          Канал в МАКС
+        </a>
+      </div>
+
+      <div class="meta-grid">
+        <div class="meta-card">
+          <div class="label">Формат</div>
+          <div class="val">4 акад. часа (30% теория / 70% практика)</div>
+        </div>
+        <div class="meta-card">
+          <div class="label">Аудитория</div>
+          <div class="val">8–11 классы / 1–2 курсы СПО (14–18 лет)</div>
+        </div>
+        <div class="meta-card">
+          <div class="label">Ключевой риск</div>
+          <div class="val">ст. 187 УК РФ (до 7 лет) + пожизненный 115-ФЗ</div>
+        </div>
+        <div class="meta-card">
+          <div class="label">Инструменты</div>
+          <div class="val">Интерактивный симулятор + AI-бот КиберЩит</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem & Target Audience Audit -->
+  <section id="audit">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Анализ рисков и профиль аудитории</div>
+        <h2 class="section-title">Почему подростки массово становятся дропперами</h2>
+        <p class="section-desc">Иллюзия «легких денег» и юридическая слепота делают школьников идеальным расходным материалом для криминальных групп.</p>
+      </div>
+
+      <div class="risk-grid">
+        <div class="risk-card">
+          <h3>Статья 187 УК РФ</h3>
+          <p>Неправомерный оборот средств платежей. Продажа, передача банковской карты или личного кабинета третьим лицам карается лишением свободы на срок до 7 лет со штрафом.</p>
+          <span class="risk-badge">Уголовная ответственность с 16 лет</span>
+        </div>
+        <div class="risk-card warn">
+          <h3>Пожизненный бан по 115-ФЗ</h3>
+          <p>Внесение реквизитов в «черный список» ЦБ РФ. Блокируются счета во всех банках страны: нельзя получить белую зарплату, стипендию, оформить самозанятость или взять кредит.</p>
+          <span class="risk-badge">Финансовая изоляция</span>
+        </div>
+        <div class="risk-card info">
+          <h3>Взыскание неосновательного обогащения</h3>
+          <p>По ст. 1102 ГК РФ реальные потерпевшие подают гражданские иски к владельцу карты. Подросток и его родители обязаны вернуть все украденные миллионы до копейки.</p>
+          <span class="risk-badge">Долги на всю семью</span>
+        </div>
+      </div>
+
+      <div style="margin-top: 48px;">
+        <h3 style="margin-bottom: 24px; font-size: 1.4rem;">Дифференциация целевой аудитории: фокус работы</h3>
+        <div class="profiles-grid">
+          <div class="profile-card">
+            <div class="profile-role">ГРУППА 1</div>
+            <h4>«Финансово наивные»</h4>
+            <div class="illusion">«Мне просто друг дяди перевел деньги, я помог, я же не вор!»</div>
+            <p class="focus"><strong>Фокус работы:</strong> Базовый ликбез по цепочке отмывания. Формирование железного рефлекса: чужие деньги через свой счет пропускать категорически запрещено.</p>
+          </div>
+          <div class="profile-card">
+            <div class="profile-role">ГРУППА 2</div>
+            <h4>«Ищущие легкий заработок»</h4>
+            <div class="illusion">«Оформлю пустую карту, получу 3000 руб. и заблокирую — профит без риска!»</div>
+            <p class="focus"><strong>Фокус работы:</strong> Разрушение мифа о «безопасном заработке». Показ судебных решений и реальных сроков дроповодов и номинальных держателей.</p>
+          </div>
+          <div class="profile-card">
+            <div class="profile-role">ГРУППА 3</div>
+            <h4>«Технологичные скептики»</h4>
+            <div class="illusion">«В Telegram все анонимно, у меня левый VPN и симка, полиция никого не найдет.»</div>
+            <p class="focus"><strong>Фокус работы:</strong> Демонстрация механизмов цифровой криминалистики (логи банков, биллинг сотовых операторов, фингерпринт устройств, СБП).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Curriculum Section -->
+  <section id="curriculum">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Структура интенсива</div>
+        <h2 class="section-title">Учебно-тематический план (4 занятия по 45 мин)</h2>
+        <p class="section-desc">Строгий баланс: не более 12–14 минут проблемной теории и не менее 30 минут следственной практики в каждом занятии.</p>
+      </div>
+
+      <div class="curriculum-grid">
+        <div class="lesson-item">
+          <div class="lesson-num">01</div>
+          <div class="lesson-info">
+            <h4>Анатомия легких денег: феномен дропперства и ст. 187 УК РФ</h4>
+            <p><strong>Практика:</strong> Лаборатория «Следствие ведут знатоки» — аудит банковской выписки, выявление признаков дроп-схемы. Разбор кейса СБП.</p>
+          </div>
+          <div class="lesson-tag">Артефакт: Стоп-лист 3 «НЕЛЬЗЯ»</div>
+        </div>
+
+        <div class="lesson-item">
+          <div class="lesson-num">02</div>
+          <div class="lesson-info">
+            <h4>Цифровой камуфляж: маркетплейсы, фишинг и игровые ловушки</h4>
+            <p><strong>Практика:</strong> Краш-тест подозрительных URL-адресов, распознавание поддельных страниц СДЭК/Авито, анализ клонированных платежных форм.</p>
+          </div>
+          <div class="lesson-tag">Артефакт: Алгоритм верификации URL</div>
+        </div>
+
+        <div class="lesson-item">
+          <div class="lesson-num">03</div>
+          <div class="lesson-info">
+            <h4>Звонок из ведомства: социальная инженерия и психологический прессинг</h4>
+            <p><strong>Практика:</strong> Ролевой полигон «Антиманипулятор»: отработка техники разрыва шаблона при звонках «из службы безопасности» и «ФСБ».</p>
+          </div>
+          <div class="lesson-tag">Артефакт: Скрипт экстренного сброса</div>
+        </div>
+
+        <div class="lesson-item">
+          <div class="lesson-num">04</div>
+          <div class="lesson-info">
+            <h4>Цифровая крепость: личный протокол безопасности и аудит следа</h4>
+            <p><strong>Практика:</strong> Настройка двухфакторной аутентификации, установка лимитов на операции, проверка цифрового следа и открытых сессий.</p>
+          </div>
+          <div class="lesson-tag">Артефакт: Чек-лист цифровой гигиены</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Handout / Infographic Section -->
+  <section id="handout">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Материалы для скачивания</div>
+        <h2 class="section-title">Раздаточный рабочий лист и инфографика</h2>
+        <p class="section-desc">Памятка для подростков и родителей, которую можно распечатать или сохранить на смартфон.</p>
+      </div>
+
+      <div class="handout-wrapper">
+        <div class="handout-preview">
+          <!-- The user specifies IMG1.jpg in the same directory -->
+          <img src="IMG1.jpg" alt="Раздатка по финансовой безопасности IMG1.jpg" onerror="this.onerror=null; this.parentElement.innerHTML='<div style=\'padding:30px;text-align:center;color:#94a3b8;\'><p style=\'font-family:monospace;font-size:1.1rem;color:#00f0ff;margin-bottom:10px;\'>[Файл IMG1.jpg]</p><p>Положите файл раздатки IMG1.jpg в корневую папку репозитория рядом с index.html</p></div>';">
+        </div>
+        <div class="handout-content">
+          <h3>Карманный стоп-лист безопасности</h3>
+          <p style="color: var(--text-muted);">Три железных правила, нарушение любого из которых ведет к уголовному делу или пожизненному бану счетов:</p>
+          <ul class="handout-rules">
+            <li><strong>НИКОГДА не передавай свою банковскую карту</strong>, логин и пароль от онлайн-банка посторонним лицам ни за какое вознаграждение.</li>
+            <li><strong>НИКОГДА не принимай переводы от незнакомцев</strong> для последующей пересылки через СБП или снятия в банкомате за процент.</li>
+            <li><strong>НИКОГДА не диктуй СМС-коды подтверждения</strong> и push-уведомления лицам, кем бы они ни представлялись по телефону.</li>
+          </ul>
+          <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+            <a href="IMG1.jpg" download="IMG1.jpg" class="btn-download">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Скачать инфографику IMG1.jpg
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Simulator Section -->
+  <section id="simulator">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Интерактивный тренажер решений</div>
+        <h2 class="section-title">Один день с банковской картой</h2>
+        <p class="section-desc">Пройди 3 развилки и сохрани 100% уровня финансовой безопасности. Каждая ошибка имеет юридические и финансовые последствия.</p>
+      </div>
+
+      <div class="simulator-container">
+        <div class="sim-header">
+          <div class="sim-title-group">
+            <h3 id="simStepIndicator">ЭТАП 1 ИЗ 3: ПРЕДЛОЖЕНИЕ В TELEGRAM</h3>
+            <p>Принимай взвешенные решения в условиях цифровых провокаций</p>
+          </div>
+          <div class="hp-box">
+            <div class="hp-label">
+              <span>УРОВЕНЬ ЗАЩИТЫ:</span>
+              <span id="hpText" style="color: var(--accent-green); font-weight: bold;">100% HP</span>
+            </div>
+            <div class="hp-bar-bg">
+              <div id="hpFill" class="hp-bar-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 1 -->
+        <div id="stage1" class="sim-stage active">
+          <div class="sim-card">
+            <div class="sim-scenario-meta">[ СИТУАЦИЯ: ВЕРБОВКА В МЕССЕНДЖЕРЕ ]</div>
+            <p>Незнакомый аккаунт в Telegram пишет вам: <em>«Привет! Есть легкая подработка для студентов и школьников. Нужно оформить бесплатную дебетовую карту в банке или передать свою старую ненужную. Платим 3500 рублей сразу на руки, карта будет использоваться только под интернет-магазин, тебе риска ноль!»</em></p>
+            <div class="sim-dialog-box">
+              <strong>Ваши действия:</strong>
+            </div>
+            <div class="sim-options">
+              <button class="sim-btn" onclick="makeChoice(1, 'bad')">
+                <span class="sim-btn-num">1</span>
+                <span>Согласиться: «Деньги нужны, карта все равно пустая, мне ничего не будет».</span>
+              </button>
+              <button class="sim-btn" onclick="makeChoice(1, 'good')">
+                <span class="sim-btn-num">2</span>
+                <span>Категорически отказаться, заблокировать контакт и пожаловаться на спам.</span>
+              </button>
+            </div>
+            <div id="feedback1" class="feedback-box"></div>
+          </div>
+        </div>
+
+        <!-- Stage 2 -->
+        <div id="stage2" class="sim-stage">
+          <div class="sim-card">
+            <div class="sim-scenario-meta">[ СИТУАЦИЯ: СДЕЛКА НА МАРКЕТПЛЕЙСЕ ]</div>
+            <p>Вы нашли на площадке объявлений кроссовки мечты со скидкой 40%. Продавец пишет в WhatsApp: <em>«Чтобы не переплачивать комиссию сервиса, давайте оформим доставку напрямую курьером. Я сформировал специальную ссылку в системе СДЭК-Оплата, переходите и подтверждайте платеж».</em></p>
+            <div class="sim-dialog-box">
+              Ссылка в сообщении выглядит так: <code>https://cdek-delivery-pay.id9481.ru/track?id=49201</code>
+            </div>
+            <div class="sim-options">
+              <button class="sim-btn" onclick="makeChoice(2, 'bad')">
+                <span class="sim-btn-num">1</span>
+                <span>Перейти по ссылке, ввести номер карты, срок действия и CVV-код для быстрой оплаты.</span>
+              </button>
+              <button class="sim-btn" onclick="makeChoice(2, 'good')">
+                <span class="sim-btn-num">2</span>
+                <span>Отказаться переходить по внешней ссылке и вести диалог строго внутри платформы.</span>
+              </button>
+            </div>
+            <div id="feedback2" class="feedback-box"></div>
+          </div>
+        </div>
+
+        <!-- Stage 3 -->
+        <div id="stage3" class="sim-stage">
+          <div class="sim-card">
+            <div class="sim-scenario-meta">[ СИТУАЦИЯ: ТЕЛЕФОННЫЙ ПРЕССИНГ ]</div>
+            <p>Вам звонит встревоженный голос с московского номера: <em>«Добрый день, старший специалист финансового контроля Центробанка / службы безопасности. Прямо сейчас с вашего счета зафиксирована попытка несанкционированного перевода в недружественную страну. Чтобы отменить операцию, назовите 4-значный код из СМС голосовому роботу-ассистенту!»</em></p>
+            <div class="sim-dialog-box">
+              В это время на телефон приходит СМС: <code>Код 8492. Никому не сообщайте! Списание 12 500 RUB</code>
+            </div>
+            <div class="sim-options">
+              <button class="sim-btn" onclick="makeChoice(3, 'bad')">
+                <span class="sim-btn-num">1</span>
+                <span>Назвать код роботу: «Они же из банка, спасают мои деньги от списания!»</span>
+              </button>
+              <button class="sim-btn" onclick="makeChoice(3, 'good')">
+                <span class="sim-btn-num">2</span>
+                <span>Немедленно сбросить звонок, не называть код и вручную набрать официальный номер банка.</span>
+              </button>
+            </div>
+            <div id="feedback3" class="feedback-box"></div>
+          </div>
+        </div>
+
+        <!-- Final Game Over Screen -->
+        <div id="stageGameOver" class="sim-stage">
+          <div class="sim-card" style="border-color: var(--accent-red); background: rgba(239,68,68,0.05);">
+            <h3 style="color: var(--accent-red); font-size: 1.6rem; margin-bottom: 12px;">🚨 КРИТИЧЕСКИЙ УРОН: КАРТА СКОМПРОМЕТИРОВАНА</h3>
+            <p id="gameOverReason" style="margin-bottom: 16px; font-size: 1rem; color: #fca5a5;"></p>
+            <div style="background: #111; padding: 16px; border-radius: 8px; font-family: var(--font-code); font-size: 0.85rem; margin-bottom: 20px;">
+              СТАТУС: Блокировка ДБО по 115-ФЗ | Материалы переданы в следственные органы
+            </div>
+            <button class="sim-reset-btn" onclick="resetSim()">Пройти симулятор заново</button>
+          </div>
+        </div>
+
+        <!-- Final Success Screen -->
+        <div id="stageSuccess" class="sim-stage">
+          <div class="sim-card" style="border-color: var(--accent-green); background: rgba(16,185,129,0.05); text-align: center; padding: 40px 20px;">
+            <div style="font-size: 3rem; margin-bottom: 10px;">🛡️</div>
+            <h3 style="color: var(--accent-green); font-size: 1.8rem; margin-bottom: 12px;">ТРИУМФ: 100% ЦИФРОВОЙ ИММУНИТЕТ</h3>
+            <p style="max-width: 600px; margin: 0 auto 20px; color: var(--text-muted);">
+              Вы успешно отразили вербовку в дропперы, распознали фишинговый домен-клон и нейтрализовали прессинг телефонных мошенников.
+            </p>
+            <div style="display: inline-block; background: #000; border: 1px solid var(--accent-green); padding: 14px 28px; border-radius: 12px; font-family: var(--font-code); color: var(--accent-green); margin-bottom: 24px;">
+              СЕРТИФИКАТ ГРАМОТНОСТИ: ВЫ НЕ СОУЧАСТНИК ПРЕСТУПЛЕНИЯ
+            </div>
+            <br>
+            <button class="sim-reset-btn" onclick="resetSim()">Пройти еще раз</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Embedded Chatbot Section -->
+  <section id="bot" class="chatbot-section">
+    <div class="container">
+      <div class="bot-layout">
+        <div class="bot-info">
+          <div class="section-eyebrow">Интеллектуальный ассистент</div>
+          <h3>Чат-бот «КиберЩит»</h3>
+          <p style="color: var(--text-muted); font-size: 1.05rem;">
+            Персональный консультант по финансовой защите и цифровой гигиене. Задай вопрос о подозрительном предложении, проверь ссылку или разберись в законах.
+          </p>
+          <ul class="bot-features">
+            <li><span>✓</span> <strong>Для учащихся:</strong> экспресс-аудит мутных схем заработка и спасение при компрометации карты.</li>
+            <li><span>✓</span> <strong>Юридическая точность:</strong> ссылки на ст. 187 УК РФ, 115-ФЗ и 1102 ГК РФ без морализаторства.</li>
+            <li><span>✓</span> <strong>Двойной режим:</strong> для преподавателей доступен закрытый методический консультант.</li>
+          </ul>
+          <div style="padding: 14px 18px; background: rgba(0,240,255,0.06); border: 1px dashed var(--accent-cyan); border-radius: 10px; font-size: 0.88rem; color: #bae6fd;">
+            💡 <em>Совет:</em> Напиши боту текст любого сообщения, которое тебе прислали незнакомцы, и он разберет риски за секунды.
+          </div>
+        </div>
+
+        <div class="bot-frame-wrap">
+          <iframe allow="microphone;autoplay" src="https://functions.pro-talk.ru/api/v1.0/chatgpt_widget_dialog_api?record_id=recTlsNfNHrcRNGmh&promt_id=74767&lang=ru&fullscreen=0&voice=1&prod=1&file=1"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Floating Launcher Button -->
+  <button class="floating-bot-toggle" onclick="document.getElementById('bot').scrollIntoView({behavior: 'smooth'})">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+    Задать вопрос КиберЩиту
+  </button>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <div style="font-weight: 800; font-size: 1.1rem; color: #fff; margin-bottom: 4px;">Финансовая безопасность и цифровая гигиена</div>
+          <div style="font-size: 0.85rem; color: #64748b;">Практико-ориентированный учебный модуль | 2026</div>
+        </div>
+        <div class="footer-links">
+          <a href="https://t.me/sharapov_rf" target="_blank" rel="noopener noreferrer">Telegram-канал</a>
+          <a href="https://max.ru/channel_sharapov" target="_blank" rel="noopener noreferrer">Канал в МАКС</a>
+          <a href="#handout">Раздатка (IMG1.jpg)</a>
+        </div>
+      </div>
+      <div style="border-top: 1px solid #1e293b; padding-top: 20px; font-size: 0.8rem; color: #475569; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+        <div>Материалы разработаны в соответствии с требованиями ст. 187 УК РФ и 115-ФЗ РФ.</div>
+        <div>Сайт оптимизирован для публикации на GitHub Pages.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Simulator State Machine JavaScript -->
+  <script>
+    let currentHp = 100;
+
+    function updateHpBar() {
+      const fill = document.getElementById('hpFill');
+      const text = document.getElementById('hpText');
+      fill.style.width = currentHp + '%';
+      text.innerText = currentHp + '% HP';
+
+      if (currentHp > 60) {
+        fill.style.backgroundColor = 'var(--accent-green)';
+        text.style.color = 'var(--accent-green)';
+      } else if (currentHp > 30) {
+        fill.style.backgroundColor = 'var(--accent-amber)';
+        text.style.color = 'var(--accent-amber)';
+      } else {
+        fill.style.backgroundColor = 'var(--accent-red)';
+        text.style.color = 'var(--accent-red)';
+      }
+    }
+
+    function showStage(stageId) {
+      document.querySelectorAll('.sim-stage').forEach(el => el.classList.remove('active'));
+      const target = document.getElementById(stageId);
+      if (target) target.classList.add('active');
+    }
+
+    function makeChoice(stage, choice) {
+      if (stage === 1) {
+        const feedback = document.getElementById('feedback1');
+        if (choice === 'bad') {
+          currentHp = 0;
+          updateHpBar();
+          document.getElementById('gameOverReason').innerText = 
+            'ФАТАЛЬНАЯ ОШИБКА: Оформление и передача банковской карты третьим лицам квалифицируется по ст. 187 УК РФ (до 7 лет лишения свободы). Вы внесены в черный список ЦБ РФ по 115-ФЗ с пожизненной блокировкой всех счетов.';
+          setTimeout(() => {
+            showStage('stageGameOver');
+          }, 800);
+        } else {
+          feedback.className = 'feedback-box success';
+          feedback.innerHTML = '<strong>Верное решение!</strong> Вы отказались участвовать в цепочке отмывания грязных денег (дропперстве) и сохранили чистую кредитную и правовую историю.';
+          feedback.style.display = 'block';
+          setTimeout(() => {
+            document.getElementById('simStepIndicator').innerText = 'ЭТАП 2 ИЗ 3: ПОКУПКА НА МАРКЕТПЛЕЙСЕ';
+            showStage('stage2');
+          }, 1200);
+        }
+      } else if (stage === 2) {
+        const feedback = document.getElementById('feedback2');
+        if (choice === 'bad') {
+          currentHp = Math.max(0, currentHp - 60);
+          updateHpBar();
+          feedback.className = 'feedback-box error';
+          feedback.innerHTML = '<strong>Удар по защите (-60% HP):</strong> Вы перешли на фишинговый домен-клон и сдали полные реквизиты карты (включая CVV). Деньги украдены, карта требует срочной блокировки!';
+          feedback.style.display = 'block';
+          setTimeout(() => {
+            if (currentHp <= 0) {
+              document.getElementById('gameOverReason').innerText = 'Вы лишились всех средств на счете из-за перехода на поддельный сайт доставки.';
+              showStage('stageGameOver');
+            } else {
+              document.getElementById('simStepIndicator').innerText = 'ЭТАП 3 ИЗ 3: ТЕЛЕФОННЫЙ ПРЕССИНГ';
+              showStage('stage3');
+            }
+          }, 1800);
+        } else {
+          feedback.className = 'feedback-box success';
+          feedback.innerHTML = '<strong>Отличная бдительность!</strong> Вы заметили сторонний домен (id9481.ru вместо официального cdek.ru). Все сделки нужно завершать исключительно внутри официального приложения.';
+          feedback.style.display = 'block';
+          setTimeout(() => {
+            document.getElementById('simStepIndicator').innerText = 'ЭТАП 3 ИЗ 3: ТЕЛЕФОННЫЙ ПРЕССИНГ';
+            showStage('stage3');
+          }, 1200);
+        }
+      } else if (stage === 3) {
+        const feedback = document.getElementById('feedback3');
+        if (choice === 'bad') {
+          currentHp = 0;
+          updateHpBar();
+          document.getElementById('gameOverReason').innerText = 
+            'ПОЛНОЕ ПОРАЖЕНИЕ: Вы передали СМС-код подтверждения третьим лицам. Мошенники мгновенно подтвердили списание всех сбережений и оформили онлайн-микрозайм на ваше имя.';
+          setTimeout(() => {
+            showStage('stageGameOver');
+          }, 800);
+        } else {
+          feedback.className = 'feedback-box success';
+          feedback.innerHTML = '<strong>Блестящая победа!</strong> Сотрудники банков и силовых ведомств никогда не требуют СМС-коды. Сброс звонка и ручной перезвон по номеру на пластике — единственный верный протокол!';
+          feedback.style.display = 'block';
+          setTimeout(() => {
+            showStage('stageSuccess');
+          }, 1200);
+        }
+      }
+    }
+
+    function resetSim() {
+      currentHp = 100;
+      updateHpBar();
+      document.getElementById('simStepIndicator').innerText = 'ЭТАП 1 ИЗ 3: ПРЕДЛОЖЕНИЕ В TELEGRAM';
+      document.querySelectorAll('.feedback-box').forEach(el => {
+        el.style.display = 'none';
+        el.innerHTML = '';
+      });
+      showStage('stage1');
+    }
+  </script>
+</body>
+</html>
